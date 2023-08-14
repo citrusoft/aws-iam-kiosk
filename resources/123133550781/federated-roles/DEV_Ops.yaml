@@ -1,0 +1,60 @@
+---
+Name: Dev_Ops
+ManagedPolicyArns:
+  - arn:aws:iam::aws:policy/ReadOnlyAccess
+  # - arn:aws:iam::aws:policy/AdministratorAccess
+Statement:
+  - Sid: "AllowServices"
+    Action: "*"
+    Effect: Allow
+    Resource: ["*"]
+  - Sid: "DenyDangerousServices"
+    Action:
+      - lightsail:*
+      - gamelift:*
+      - devicefarm:*
+      - elastictranscoder:*
+      - mechanicalturk:*
+      - chime:*
+      - media:*
+      - workdocs:*
+      - workmail:*
+      - billing:*
+    Effect: Deny
+    Resource: ["*"]
+  - Sid: "DenyDangerousActions"
+    Action:
+      - "ec2:AttachInternetGateway"
+      - "ec2:CreateInternetGateway"
+      - "ec2:AttachEgressOnlyInternetGateway"
+      - "ec2:CreateVpcPeeringConnection"
+      - "ec2:AcceptVpcPeeringConnection"
+      - cloudtrail:DeleteTrail
+      - cloudtrail:StopLogging
+      - directconnect:allocate*
+      - directconnect:create*
+      - directconnect:delete*
+    Effect: Deny
+    Resource: "*"
+  - Sid: "DenyIAMUserManagement"
+    Action:
+      - iam:*User*
+      - iam:*Group*
+      - iam:*AccessKey*
+      - iam:*Login*
+      - iam:*SSH*
+      - iam:*Certificate*
+      - iam:*MFA*
+    Effect: Deny
+    Resource: "*"
+  - Sid: "DenyIdentityProviderManagement"
+    Action:
+      - iam:AddClientIDToOpenIDConnectProvider
+      - iam:RemoveClientIDFromOpenIDConnectProvider
+      - iam:UpdateOpenIDConnectProviderThumbprint
+      - iam:CreateSAMLProvider
+      - iam:CreateOpenIDConnectProvider
+      - iam:DeleteOpenIDConnectProvider
+      - iam:DeleteSAMLProvider
+    Effect: Deny
+    Resource: "*"

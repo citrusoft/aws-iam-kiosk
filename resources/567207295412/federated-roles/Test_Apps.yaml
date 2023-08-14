@@ -1,0 +1,153 @@
+Name: Test_Apps
+Tags:
+  AppID: APP-3137
+  DataClassification: Internal
+  Environment: Dev
+  Owner: S1KO_M61W_M61W
+  CRIS: Low
+  Compliance: None
+  Notify: m61w@abc.com
+Statement:
+  - Sid: "GlueS3"
+    Action:
+      - glue:*
+      - s3:PutObject
+      - s3:GetObject
+      - s3:ListBucketMultipartUploads
+      - s3:AbortMultipartUpload
+      - s3:CreateBucket
+      - s3:ListBucket
+      - s3:GetBucketLocation
+      - s3:ListMultipartUploadParts
+    Effect: Allow
+    Resource:
+      - arn:aws:s3:::oamodel
+      - arn:aws:s3:::oamodel/athena_result
+      - arn:aws:s3:::oamodel/athena_result/*
+      - arn:aws:glue:us-west-2:967517989313:table/operational_model/*
+      - arn:aws:glue:us-west-2:967517989313:catalog
+      - arn:aws:glue:us-west-2:967517989313:database/operational_model
+  - Sid: "GlueS3KMSAllResources"
+    Action:
+      - athena:*
+      - glue:BatchGetCrawlers
+      - glue:BatchGetJobs
+      - glue:BatchGetTriggers
+      - glue:BatchGetWorkflows
+      - glue:BatchStopJobRun
+      - glue:CreateClassifier
+      - glue:CreateCrawler
+      - glue:CreateJob
+      - glue:CreateMLTransform
+      - glue:CreateScript
+      - glue:CreateSecurityConfiguration
+      - glue:CreateTrigger
+      - glue:CreateWorkflow
+      - glue:DeleteClassifier
+      - glue:DeleteCrawler
+      - glue:DeleteJob
+      - glue:DeleteSecurityConfiguration
+      - glue:DeleteTrigger
+      - glue:DeleteWorkflow
+      - glue:GetClassifier
+      - glue:GetClassifiers
+      - glue:GetCrawler
+      - glue:GetCrawlerMetrics
+      - glue:GetCrawlers
+      - glue:GetDataCatalogEncryptionSettings
+      - glue:GetDataflowGraph
+      - glue:GetJob
+      - glue:GetJobBookmark
+      - glue:GetJobRun
+      - glue:GetJobRuns
+      - glue:GetJobs
+      - glue:GetMapping
+      - glue:GetMLTransforms
+      - glue:GetPlan
+      - glue:GetSecurityConfiguration
+      - glue:GetSecurityConfigurations
+      - glue:GetTrigger
+      - glue:GetTriggers
+      - glue:GetWorkflow
+      - glue:GetWorkflowRun
+      - glue:GetWorkflowRunProperties
+      - glue:GetWorkflowRuns
+      - glue:ListCrawlers
+      - glue:ListJobs
+      - glue:ListMLTransforms
+
+      - glue:ListTriggers
+      - glue:ListWorkflows
+      - glue:PutDataCatalogEncryptionSettings
+      - glue:PutWorkflowRunProperties
+      - glue:ResetJobBookmark
+      - glue:StartCrawler
+      - glue:StartCrawlerSchedule
+      - glue:StartJobRun
+      - glue:StartTrigger
+      - glue:StartWorkflowRun
+      - glue:StopCrawler
+      - glue:StopCrawlerSchedule
+      - glue:StopTrigger
+      - glue:UpdateClassifier
+      - glue:UpdateCrawler
+      - glue:UpdateCrawlerSchedule
+      - glue:UpdateJob
+      - glue:UpdateTrigger
+      - glue:UpdateWorkflow
+      - kms:ConnectCustomKeyStore
+      - kms:CreateCustomKeyStore
+      - kms:CreateKey
+      - kms:DeleteCustomKeyStore
+      - kms:DescribeCustomKeyStores
+      - kms:DisconnectCustomKeyStore
+      - kms:GenerateRandom
+      - kms:ListAliases
+      - kms:ListKeys
+      - kms:UpdateCustomKeyStore
+      - s3:ListBucket
+      - s3:ListAllMyBuckets
+    Effect: Allow
+    Resource: "*"
+  - Sid: "AdminGlueS3KMS"
+    Action:
+      - glue:*
+      - kms:GetPublicKey
+      - kms:Decrypt
+      - kms:GetKeyPolicy
+      - kms:Encrypt
+      - kms:GetKeyRotationStatus
+      - kms:GenerateDataKey
+      - kms:DescribeKey
+      - kms:ListResourceTags
+      - kms:GetParametersForImport
+      - s3:ListBucketMultipartUploads
+      - s3:CreateBucket
+      - s3:ListBucket
+      - s3:ListMultipartUploadParts
+      - s3:PutObject
+      - s3:GetObject
+      - s3:AbortMultipartUpload
+      - s3:GetBucketLocation
+    Effect: Allow
+    Resource:
+      - arn:aws:glue:*:*:qaendpoint/*
+      - arn:aws:glue:*:*:connection/*
+      - arn:aws:glue:*:*:trigger/*
+      - arn:aws:glue:*:*:workflow/*
+      - arn:aws:glue:*:*:crawler/*
+      - arn:aws:glue:*:*:job/*
+      - arn:aws:glue:*:*:mlTransform/*
+      - arn:aws:glue:*:*:tableVersion/*/*/*
+      - arn:aws:glue:*:*:userDefinedFunction/*/*
+      - arn:aws:glue:*:*:catalog
+      - arn:aws:s3:::oamodel
+      - arn:aws:s3:::oamodel/*
+      - arn:aws:kms:*:*:key/*
+  - Sid: "AdminKMS"
+    Action:
+      - kms:*
+    Effect: Allow
+    Resource:
+      - arn:aws:kms:*:*:alias/*
+      - arn:aws:kms:*:*:key/*

@@ -1,0 +1,38 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "GovernIamPrivies",
+            "Effect": "Deny",
+            "Action": "iam:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "RestrictRegion",
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestedRegion": [
+                        "us-east-1",
+                        "us-west-2"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "RestrictByOrganization",
+            "Effect": "Deny",
+            "Action": "*",
+            "Resource": "*",
+            "Condition": {
+                "ForAnyValue:StringNotLike": {
+                    "aws:PrincipalOrgPaths": [
+                       "${target_org_path}"
+                    ]
+                }
+            }
+        }
+    ]
+}

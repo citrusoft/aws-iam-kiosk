@@ -1,0 +1,41 @@
+---
+Name: SVC-TEST-Ops
+Tags:
+  AppID: APP-3137
+  DataClassification: Internal
+  Environment: Dev
+  Owner: S1KO_M61W_M61W
+  CRIS: Low
+  Compliance: None
+  Notify: m61w@abc.com
+Statement:
+  - Sid: ListAllMyBuckets
+    Action:
+      - s3:ListAllMyBuckets
+      - s3:GetBucketLocation
+    Effect: Allow
+    Resource:
+      - arn:aws:s3:::*
+  - Sid: AllS3Actions
+    Effect: Allow
+    Action:
+      - s3:*
+    Resource:
+      - arn:aws:s3:::proactive-outage-072050018522
+      - arn:aws:s3:::proactive-outage-072050018522/*
+      - arn:aws:s3:::proactive-outage-dms-072050018522
+      - arn:aws:s3:::proactive-outage-dms-072050018522/*
+      - arn:aws:s3:::proactive-outage-ccb-072050018522
+      - arn:aws:s3:::proactive-outage-ccb-072050018522/*
+      - arn:aws:s3:::proactive-outage-archive-072050018522
+      - arn:aws:s3:::proactive-outage-archive-072050018522/*
+      - arn:aws:s3:::proactive-outage-processfailed-072050018522
+      - arn:aws:s3:::proactive-outage-processfailed-072050018522/*
+  - Sid: ListMySQSQueue
+    Effect: Allow
+    Action:
+      - sqs:*
+    Resource:
+      - arn:aws:sqs:*:072050018522:ei_mulesoft_proactive_outage_queue
+      - arn:aws:sqs:*:072050018522:ei_mulesoft_proactive_outage_error_queue
+      - arn:aws:sqs:*:072050018522:ei_mulesoft_proactive_outage_archive_queue

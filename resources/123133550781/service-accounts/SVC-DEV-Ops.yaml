@@ -1,0 +1,12 @@
+---
+Name: DEV-Ops
+ManagedPolicyArns:
+  - arn:aws:iam::aws:policy/SecurityAudit
+Statement:
+  - Sid: AllS3Actions
+    Effect: Allow
+    Action:
+      - s3:*
+    Resource:
+      - arn:aws:s3:::mrad-eks-cb-backup
+      - arn:aws:s3:::mrad-eks-cb-backup/*

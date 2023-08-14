@@ -1,0 +1,4 @@
+---
+Name: SVC-PROD-Auditor
+ManagedPolicyArns:
+  - arn:aws:iam::aws:policy/SecurityAudit
