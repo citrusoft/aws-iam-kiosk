@@ -21,6 +21,68 @@ This automation consumes the YAML specifications in the resources directory to c
 ```
 terraform login
 ```
+If you are beginning with a "blank slate" then you'll need to create a TFC workspace for your infrastructure deployment.
+That infrastructure-workspace  uses the directory names in resources folder to configure the "pipelines" aka workspaces, 1 per account.
+Projects are not mandatory but I prefer to isolate this solution into its own TFC project.
+```
+export TFE_TOKEN=
+export TFE_ORG=citrusoft
+export TFE_PROJECT_NAME=aws-iam-kiosk
+cat <<EOF > payload.json
+{
+  "data": {
+    "attributes": {
+      "name": "${TFE_PROJECT_NAME}"
+    },
+    "type": "projects"
+  }
+}
+EOF
+curl \
+  --header "Authorization: Bearer $TFE_TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  ${TFE_ADDR}/api/v2/organizations/${TFE_ORG}/projects | jq -r .
+
+export TFE_PROJECT_ID=$(curl -s \
+  --header "Authorization: Bearer $TFE_TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  https://app.terraform.io/api/v2/organizations/${TFE_ORG}/projects | \
+  jq -r ".data[] | select (.attributes.name==\"${TFE_PROJECT_NAME}\") | .id")
+
+cat <<EOF > payload.json
+{
+  "data": {
+    "attributes": {
+      "name": "${TFE_WORKSPACE_NAME}",
+      "auto-apply": true
+    },
+    "relationships": {
+      "project": {
+        "data": {
+          "type": "projects",
+          "id": "${TFE_PROJECT_ID}"
+        }
+      }
+    },
+    "type": "workspaces"
+  }
+}
+EOF
+curl -s \
+  --header "Authorization: Bearer $TFE_TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  --request POST \
+  --data @payload.json \
+  ${TFE_ADDR}/api/v2/organizations/${TFE_ORG}/workspaces | jq -r .
+export TFE_WORKSPACE_NAME=orchestration
+export WORKSPACE_ID=$(curl -s \
+  --header "Authorization: Bearer $TFE_ORG_TOKEN" \
+  --header "Content-Type: application/vnd.api+json" \
+  ${TFE_ADDR}/api/v2/organizations/${TFE_ORG}/workspaces | \
+  jq -r ".data[] | select (.attributes.name==\"${TFE_WORKSPACE_NAME}\") | .id")
+```
 2. Set AWS variables...
 ```
 export AWS_PROFILE=
