@@ -63,7 +63,7 @@ variable "project_name" {
 variable "root_workspace" {
   description = "Name the root of all the workspaces."
   type        = string
-  default        = "orchestration"
+  default     = "orchestration"
 }
 
 variable "saml_account_num" {
