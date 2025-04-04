@@ -98,15 +98,14 @@ aws sts get-caller-identity
 ```
 4. Test your terraform credentials and confirm the state of orchestration is what you desire.
 ```
-cd git/DIYStackset/iam-kiosk/orchestration
+cd orchestration
 terraform state list
 ```
-5. Create terraform Variable Sets via the Browser
-* Create an org variable-set named, *TFC*, add env var TFE_Token; populate it with your user-token.
-* Create an org variable-set named, *Github*, with HCL variable named, oauth_token_id.
-..* If integration exists then, see https://app.terraform.io/app/citrusoft/settings/version-control
-..* Or, you may have to setup the integration, see https://developer.hashicorp.com/terraform/tutorials/cloud/github-oauth
-* Create an org variable-set named *Tags*, populate it with default values for the entire org.
+5. Create an Organization variable-set named, *TFC*, add env var TFE_TOKEN; populate it with your user-token.  Apply this variable set to your workspace, ie orchestration.
+6. Create an Organization variable-set named, *Github*, with HCL variable named, oauth_token_id.  Apply it to your project, ie aws-iam-kiosk.
+..* If Github integration exists then, see https://app.terraform.io/app/citrusoft/settings/version-control
+..* Or, you may have to setup Github integration, see https://developer.hashicorp.com/terraform/tutorials/cloud/github-oauth
+7. Create an Organization variable-set named *Tags*, populate it with default values.  Apply it to your project, ie aws-iam-kiosk.
 ..* Tags/AppID, Compliance, CRIS, DataClassification, Environment, Notify, Owner
 * For each file in resources/*/*.tfvars, use the file contents to create an organizational variable set named, "account#-vars", ie 123133550781-vars.
 ..* set environment variables: AWS_ACCESS_KEY_ID,  AWS_SECRET_ACCESS_KEY
@@ -121,7 +120,21 @@ The remaining vars do not require changing.
 cd orchestration
 vim terraform.auto.tfvars
 ```
-8. Deploy the orchestration.
+resource_folder   = "/resources"
+resource_path     = "../resources"
+organization      = "citrusoft"
+saml_account_num  = "SECRET12digits"
+github_repo       = "https://github.com/citrusoft/aws-iam-kiosk"
+project_name      = "aws-iam-kiosk"
+config_auto_apply = "false"
+github_org        = "citrusoft"
+branch            = "xxdemo"
+oauth_token_id    = "SECRETot-"
+drift_detection   = "false"
+
+8. Enable Terrraform Cloud to access this Github reposoitpry.
+
+9. Deploy the orchestration.
 ```
 terraform init
 terraform apply -auto-approve

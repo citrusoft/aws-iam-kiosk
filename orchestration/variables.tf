@@ -60,6 +60,11 @@ variable "project_name" {
   type        = string
 }
 
+variable "project_id" {
+  description = "ID of the project."
+  type        = string
+}
+
 variable "root_workspace" {
   description = "Name the root of all the workspaces."
   type        = string

@@ -46,11 +46,11 @@ locals {
       queue_all_runs = true
       auto_apply     = true
       # This directory changes if its the SAML account-workspace.
-      working_directory = account != var.saml_account_num ? "iam-kiosk/partner-pipeline" : "iam-kiosk/saml-pipeline"
+      working_directory = account != var.saml_account_num ? "partner-pipeline" : "saml-pipeline"
       varset            = "${account}-vars"
       github_org        = var.github_org
       github_repo       = var.github_repo
-      trigger_patterns  = account != var.saml_account_num ? ["${var.resource_folder}/${account}/**/*", "iam-kiosk/partner-pipeline/**/*"] : ["${var.resource_folder}/${account}/**/*", "iam-kiosk/saml-pipeline/**/*"]
+      trigger_patterns  = account != var.saml_account_num ? ["${var.resource_folder}/${account}/**/*", "partner-pipeline/**/*"] : ["${var.resource_folder}/${account}/**/*", "saml-pipeline/**/*"]
       ws_tags           = var.tags
       terraform_version = var.terraform_version
       drift_detection   = var.drift_detection
@@ -67,6 +67,7 @@ module "workspaces" {
   name              = each.key
   organization      = data.tfe_organization.citrusoft.name
   project_id        = data.tfe_project.iam-kiosk.id
+  # project_id        = var.project_id
   queue_all_runs    = each.value.queue_all_runs
   auto_apply        = each.value.auto_apply
   working_directory = each.value.working_directory

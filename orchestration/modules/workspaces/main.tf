@@ -14,7 +14,7 @@ locals {
 
 # Create the workspace
 resource "tfe_workspace" "this" {
-  name                  = "ccoe-iam-${var.name}"
+  name                  = "aws-iam-${var.name}"
   organization          = var.organization
   project_id            = var.project_id
   auto_apply            = var.auto_apply
