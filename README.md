@@ -132,7 +132,7 @@ branch            = "xxdemo"
 oauth_token_id    = "SECRETot-"
 drift_detection   = "false"
 
-8. Enable Terrraform Cloud to access this Github reposoitpry.
+8. Enable Terrraform Cloud to access this Github reposoitory. See https://developer.hashicorp.com/terraform/cloud-docs/vcs/github
 
 9. Deploy the orchestration.
 ```

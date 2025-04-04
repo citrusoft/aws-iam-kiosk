@@ -30,7 +30,7 @@ variable "aws_region" {
 variable "aws_role" {
   description = "AWS role to assume"
   type        = string
-  default     = "CloudAdmin"
+  default     = "Administrator"
 }
 
 variable "tags" {
