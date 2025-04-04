@@ -3,6 +3,7 @@ Name: Auditor-NIST
 Description: "IAM Role with ReadOnlyAccess policy attached."
 Tags:
   Environment: Development
+  Scenario: Sunny
 ManagedPolicyArns:
   - "arn:aws:iam::aws:policy/ReadOnlyAccess"
 
