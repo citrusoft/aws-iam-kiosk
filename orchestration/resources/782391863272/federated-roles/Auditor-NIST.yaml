@@ -3,11 +3,6 @@ Name: Auditor-NIST
 Description: "IAM Role with ReadOnlyAccess policy attached."
 Tags:
   Environment: Development
-Statement:
-  - Effect: "Allow"
-    Principal:
-      AWS: "arn:aws:iam::YOUR_ACCOUNT_ID:root"
-    Action: "sts:AssumeRole"
 ManagedPolicyArns:
   - "arn:aws:iam::aws:policy/ReadOnlyAccess"
 
